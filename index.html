@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hjælp Kim Allan med at sikre sit password</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Hjælp Kim Allan med at sikre sit password</h1>
+
+    <section id="intro">
+      <p>Kim Allan har fået hacket sin konto, fordi han brugte et svagt password. Se videoen nedenfor for at lære, hvordan man laver et stærkt password.</p>
+      <video controls width="100%">
+        <source src="video.mp4" type="video/mp4" />
+        Din browser understøtter ikke video.
+      </video>
+      <button id="start-slides-btn">Fortsæt til info</button>
+    </section>
+
+    <section id="slides" class="hidden">
+      <div id="slide-content"></div>
+      <button id="prev-slide-btn">Tilbage</button>
+      <button id="next-slide-btn">Næste</button>
+    </section>
+
+    <section id="content" class="hidden">
+      <div id="scenario"></div>
+      <div id="choices"></div>
+      <div id="summary" class="hidden">
+        <h2>Opsummering af dine valg</h2>
+        <ul id="choice-summary"></ul>
+      </div>
+    </section>
+    <img class="graphic credit-card" src="img/credit-card.png" alt="">
+    <img class="graphic malware" src="img/malware.png" alt="">
+    <img class="graphic unlocked" src="img/unlocked.png" alt="">
+    <img class="graphic virus" src="img/virus.png" alt="">
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
