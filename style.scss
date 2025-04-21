@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+$background-color: #FFFDEF;
+$primary-color: #9A4D00;
+$secondary-color: #e0f7fa;
+$choice-color: #050058;
+$font-family: 'Montserrat', sans-serif;
+
+body {
+  font-family: $font-family;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background-color: $background-color;
+  color: #333;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 62px 40px;
+}
+
+h1 {
+  color: $primary-color;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+li {
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+#choices button {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 12px;
+  text-align: left;
+  background-color: $choice-color;
+}
+
+#choice-summary {
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+
+    &.correct {
+      background-color: #4CAF50;
+      /* Grøn for korrekt svar */
+      color: white;
+    }
+
+    &.incorrect {
+      background-color: #F44336;
+      /* Rød for forkert svar */
+      color: white;
+    }
+  }
+}
+
+.ending-message {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+#retry-btn {
+  margin-left: 8px;
+}
+
+
+.graphic {
+  position: absolute;
+  width: 100px;
+  aspect-ratio: 1;
+
+  @media  screen and (max-width: 1000px) {
+    width: 40px;
+  }
+
+  &.credit-card {
+    top: 16px;
+    left: 16px;
+  }
+
+  &.virus {
+    top: 16px;
+    right: 16px;
+  }
+
+  &.malware {
+    bottom: 16px;
+    left: 16px;
+  }
+
+  &.unlocked {
+    bottom: 16px;
+    right: 16px;
+  }
+}

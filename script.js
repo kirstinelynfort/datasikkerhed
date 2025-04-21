@@ -10,7 +10,7 @@ const slides = [
 
 const scenarios = [
     {
-        question: "Kim Allan er på sit livs mission. Han vil gerne lave en ny og totalt Hacker Ole-sikker adgangskode, men han har svært ved at huske, hvad en god adgangskode nu er? Jeg håber, at du kan hjælpe ham! Hvad bør Kim vælge som sin nye adgangskode?",
+        question: "Kim Allan er på sit livs mission. Han vil gerne lave en ny og totalt Hacker Ole-sikker adgangskode. Hvad bør han vælge?",
         choices: [
             { text: "Den skal være kort og personlig", correct: false },
             { text: "Den skal være varierende og unik", correct: true },
@@ -21,37 +21,37 @@ const scenarios = [
     {
         question: "Hvad skal hans nye adgangskode indeholde? Hjælp Kim Allan med at vælge den helt rigtige!",
         choices: [
-            { text: "Den skal ikke indeholde nogle specialtegn og være meget kort", correct: false },
-            { text: "Den skal indeholde en blanding af specialtegn, store og små bogstaver, være minimum 12-16 tegn og indeholde ingen personlige oplysninger", correct: true },
-            { text: "Adgangskoden skal være under 4 bogstaver og være meget meget personlig", correct: false },
-            { text: "Adgangskoden skal kun indeholde ting fra Kim Allans hverdag, så han nemt kan huske den!", correct: false }
+            { text: "Ingen specialtegn og meget kort", correct: false },
+            { text: "Specialtegn, store/små bogstaver, 12-16 tegn, ingen personlige oplysninger", correct: true },
+            { text: "Under 4 bogstaver og meget personlig", correct: false },
+            { text: "Kun ting fra Kim Allans hverdag", correct: false }
         ]
     },
     {
-        question: "Kim Allan er nervøs for at glemme sin nye adgangskode. Kan han gøre sin adgangskode nem at huske, men svær at gætte? Jeg håber at du kan hjælpe ham!",
+        question: "Kim Allan er nervøs for at glemme sin nye adgangskode. Hvad skal han gøre?",
         choices: [
-            { text: "Han skal bruge en passphrase og eller en forkortet sætning!", correct: true },
-            { text: "Han skal slå det op på sin Facebook-væg, så han altid ved hvor han kan finde den!", correct: false },
-            { text: "Han skal skrive adgangskoden til alle sine venner på Instagram, så kan de nemlig hjælpe ham med at huske den!", correct: false },
-            { text: "Han skal hænge den på køleskabet - der glemmer man nemlig aldrig noget!", correct: false }
+            { text: "Brug en passphrase eller forkortet sætning", correct: true },
+            { text: "Skriv den på sin Facebook-væg", correct: false },
+            { text: "Del den med sine venner på Instagram", correct: false },
+            { text: "Hæng den på køleskabet", correct: false }
         ]
     },
     {
-        question: "Kim Allan vil gerne se nogle andre eksempler på gode og stærke adgangskoder - Hvor kan han tjekke det henne?",
+        question: "Hvor kan Kim Allan finde eksempler på stærke adgangskoder?",
         choices: [
-            { text: "Han kan se det ved at bruge password-manager som Bitwarden, 1Password eller LastPass", correct: true },
-            { text: "Han skal spørge sin farmor Birthe", correct: false },
-            { text: "Han kan da bare spørge Hacker Ole", correct: false },
-            { text: "Han kan skrive sin tænkte adgangskode i en Facebook gruppe, og spørge folk om hjælp der", correct: false }
+            { text: "I en password manager som Bitwarden, 1Password eller LastPass", correct: true },
+            { text: "Spørge sin farmor Birthe", correct: false },
+            { text: "Spørge Hacker Ole", correct: false },
+            { text: "I en Facebook-gruppe", correct: false }
         ]
     },
     {
-        question: "Nu har Kim Allan brug for din hjælp en sidste gang! Han har simpelthen glemt hvordan han kan sikre sine data yderligere. Jeg håber at du kan hjælpe ham med det!",
+        question: "Hvordan kan Kim Allan beskytte sine data endnu mere?",
         choices: [
-            { text: "Han skal aktivere to-faktor-godkendelse (2FA) via en app, som fx Google Authenticator, Microsoft Authenticator", correct: true },
-            { text: "Han skal bare skrive sin kode til alle sine venner på Instagram, så kan de hjælpe ham med at huske den", correct: false },
-            { text: "Han er da for sej til at beskytte sine data og behøver ikke mere hjælp!", correct: false },
-            { text: "Han kan hænge koden på køleskabet, så glemmer han den i hvert fald aldrig!", correct: false }
+            { text: "Aktiver to-faktor-godkendelse (2FA) via en app", correct: true },
+            { text: "Del sin kode med venner", correct: false },
+            { text: "Han behøver ikke mere hjælp", correct: false },
+            { text: "Hæng koden på køleskabet", correct: false }
         ]
     }
 ];
@@ -60,23 +60,17 @@ let currentSlide = 0;
 let currentIndex = 0;
 let userChoices = [];
 
+function showSlide() {
+    document.getElementById("slide-content").innerHTML = slides[currentSlide];
+    document.getElementById("prev-slide-btn").style.display = currentSlide === 0 ? "none" : "inline-block";
+}
+
 function renderScenario() {
     const container = document.getElementById("scenario");
     const choiceContainer = document.getElementById("choices");
 
     if (currentIndex >= scenarios.length) {
-        document.getElementById("summary").classList.remove("hidden");
-        const summary = document.getElementById("choice-summary");
-        summary.innerHTML = "";
-
-        userChoices.forEach((choice, index) => {
-            const li = document.createElement("li");
-            li.textContent = `${scenarios[index].question} → Du svarede: "${choice.text}" (${choice.correct ? "Rigtigt" : "Forkert"})`;
-            li.classList.add(choice.correct ? "correct" : "incorrect");
-            summary.appendChild(li);
-        });
-
-        determineEnding();
+        showSummary();
         return;
     }
 
@@ -96,33 +90,19 @@ function renderScenario() {
     });
 }
 
-function determineEnding() {
-    let correctAnswers = userChoices.filter(choice => choice.correct).length;
-
-    let endingMessage = "";
-    let retryButton = "";
+function showSummary() {
+    const summaryContainer = document.getElementById("summary");
+    const summaryList = document.getElementById("choice-summary") || document.createElement("ul");
+    summaryList.id = "choice-summary";
+    const correctAnswers = userChoices.filter(choice => choice.correct).length;
 
     document.getElementById("scenario").classList.add("hidden");
     document.getElementById("choices").classList.add("hidden");
+    summaryContainer.classList.remove("hidden");
 
-    const summaryContainer = document.getElementById("summary");
     summaryContainer.innerHTML = "<h2>Opsummering af dine valg</h2>";
+    summaryList.innerHTML = "";
 
-    if (correctAnswers === scenarios.length) {
-        endingMessage = "Fantastisk! Kim Allan har nu lært at lave et stærkt password og er beskyttet mod Hacker Ole! Du kan prøve spillet igen for sjov, hvis du vil.";
-        retryButton = `<button id="retry-btn">Prøv igen (for sjov)</button>`;
-    } else if (correctAnswers >= scenarios.length - 1) {
-        endingMessage = "Kim Allan har taget nogle gode valg, men der er stadig plads til forbedringer!";
-        retryButton = `<button id="retry-btn">Prøv igen</button>`;
-    } else {
-        endingMessage = "Kim Allan er stadig i fare! Han har ikke valgt de bedste muligheder. Husk at vælge stærke passwords og sikre metoder!";
-        retryButton = `<button id="retry-btn">Prøv igen</button>`;
-    }
-
-    summaryContainer.innerHTML += `<p class="ending-message">${endingMessage}</p>`;
-    summaryContainer.innerHTML += `<ul id="choice-summary"></ul>`;
-
-    const summaryList = document.getElementById("choice-summary");
     userChoices.forEach((choice, index) => {
         const li = document.createElement("li");
         li.textContent = `${scenarios[index].question} → Du svarede: "${choice.text}" (${choice.correct ? "Rigtigt" : "Forkert"})`;
@@ -130,20 +110,62 @@ function determineEnding() {
         summaryList.appendChild(li);
     });
 
-    summaryContainer.innerHTML += retryButton;
-    document.getElementById("retry-btn").addEventListener("click", () => {
-        resetGame();
+    let message = "";
+    if (correctAnswers === scenarios.length) {
+        message = "Fantastisk! Kim Allan har nu lært at lave et stærkt password og er beskyttet mod Hacker Ole! Du kan prøve spillet igen for sjov.";
+    } else if (correctAnswers >= scenarios.length - 1) {
+        message = "Kim Allan har taget nogle gode valg, men der er stadig plads til forbedringer!";
+    } else {
+        message = "Kim Allan er stadig i fare! Husk at vælge stærke passwords og sikre metoder!";
+    }
+
+    summaryContainer.innerHTML += `<p class="ending-message">${message}</p>`;
+    summaryContainer.appendChild(summaryList);
+
+    const previousResults = JSON.parse(localStorage.getItem("kimQuizResults")) || [];
+    const newResult = {
+        date: new Date().toLocaleString(),
+        correct: correctAnswers,
+        total: scenarios.length
+    };
+    previousResults.push(newResult);
+    localStorage.setItem("kimQuizResults", JSON.stringify(previousResults));
+
+    const resultHistory = document.createElement("div");
+    resultHistory.innerHTML = "<h3>Dine tidligere resultater</h3>";
+
+    const resultList = document.createElement("ul");
+    previousResults.slice(-5).reverse().forEach(result => {
+        const li = document.createElement("li");
+        li.textContent = `${result.date}: ${result.correct}/${result.total} rigtige`;
+        resultList.appendChild(li);
     });
+
+    resultHistory.appendChild(resultList);
+    summaryContainer.appendChild(resultHistory);
+
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "Slet historik";
+    clearBtn.addEventListener("click", () => {
+        localStorage.removeItem("kimQuizResults");
+        resultHistory.remove();
+        clearBtn.remove();
+    });
+    summaryContainer.appendChild(clearBtn);
+
+    const retryBtn = document.createElement("button");
+    retryBtn.id = "retry-btn";
+    retryBtn.textContent = "Prøv igen";
+    retryBtn.addEventListener("click", resetGame);
+    summaryContainer.appendChild(retryBtn);
 }
 
 function resetGame() {
     userChoices = [];
     currentIndex = 0;
-
     document.getElementById("summary").classList.add("hidden");
     document.getElementById("scenario").classList.remove("hidden");
     document.getElementById("choices").classList.remove("hidden");
-
     renderScenario();
 }
 
@@ -165,15 +187,8 @@ document.getElementById("next-slide-btn").addEventListener("click", () => {
 });
 
 document.getElementById("prev-slide-btn").addEventListener("click", () => {
-    currentSlide--;
-    if (currentSlide < slides.length) {
+    if (currentSlide > 0) {
+        currentSlide--;
         showSlide();
     }
 });
-
-function showSlide() {
-    document.getElementById("slide-content").innerHTML = slides[currentSlide];
-
-    const prevBtn = document.getElementById("prev-slide-btn");
-    prevBtn.style.display = currentSlide === 0 ? "none" : "inline-block";
-}
