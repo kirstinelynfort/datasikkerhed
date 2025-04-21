@@ -112,7 +112,7 @@ function determineEnding() {
         endingMessage = "Fantastisk! Kim Allan har nu lært at lave et stærkt password og er beskyttet mod Hacker Ole! Du kan prøve spillet igen for sjov, hvis du vil.";
         retryButton = `<button id="retry-btn">Prøv igen (for sjov)</button>`;
     } else if (correctAnswers >= scenarios.length - 1) {
-        endingMessage = "Næsten der! Kim Allan har gjort nogle gode valg, men der er stadig plads til forbedringer!";
+        endingMessage = "Kim Allan har taget nogle gode valg, men der er stadig plads til forbedringer!";
         retryButton = `<button id="retry-btn">Prøv igen</button>`;
     } else {
         endingMessage = "Kim Allan er stadig i fare! Han har ikke valgt de bedste muligheder. Husk at vælge stærke passwords og sikre metoder!";
