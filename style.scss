@@ -73,13 +73,11 @@ button {
 
     &.correct {
       background-color: #4CAF50;
-      /* Grøn for korrekt svar */
       color: white;
     }
 
     &.incorrect {
       background-color: #F44336;
-      /* Rød for forkert svar */
       color: white;
     }
   }

@@ -163,10 +163,10 @@ function showSummary() {
 function resetGame() {
     userChoices = [];
     currentIndex = 0;
+    currentSlide = 0
     document.getElementById("summary").classList.add("hidden");
-    document.getElementById("scenario").classList.remove("hidden");
-    document.getElementById("choices").classList.remove("hidden");
-    renderScenario();
+    document.getElementById("slides").classList.remove("hidden");
+    showSlide();
 }
 
 document.getElementById("start-slides-btn").addEventListener("click", () => {
@@ -182,6 +182,8 @@ document.getElementById("next-slide-btn").addEventListener("click", () => {
     } else {
         document.getElementById("slides").classList.add("hidden");
         document.getElementById("content").classList.remove("hidden");
+        document.getElementById("scenario").classList.remove("hidden");
+        document.getElementById("choices").classList.remove("hidden");
         renderScenario();
     }
 });
