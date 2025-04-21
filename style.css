@@ -80,6 +80,10 @@ button:hover {
   font-weight: 600;
 }
 
+#retry-btn {
+  margin-left: 8px;
+}
+
 .graphic {
   position: absolute;
   width: 100px;
